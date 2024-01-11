@@ -4,7 +4,7 @@ namespace WebApplication1.Models;
 
 public class StoreContext : DbContext
 {
-    public DbSet<ProductStorage> ProductStorage { get; set;}
+    public DbSet<Storage> ProductStorage { get; set;}
     public DbSet<Product> Products { get; set;}
     public DbSet<Group> ProductGroups { get; set;}
 
@@ -39,7 +39,7 @@ public class StoreContext : DbContext
             HasMaxLength(255).
             IsRequired();
 
-            entity.Property(e => e.Cost).
+            entity.Property(e => e.Price).
             HasColumnName("Cost").
             IsRequired();
 
