@@ -6,7 +6,7 @@ public class StoreContext : DbContext
 {
     public DbSet<ProductStorage> ProductStorage { get; set;}
     public DbSet<Product> Products { get; set;}
-    public DbSet<ProductGroup> ProductGroups { get; set;}
+    public DbSet<Group> ProductGroups { get; set;}
 
     public StoreContext(DbContextOptions<StoreContext> dbContext) : base(dbContext)
     {
@@ -43,13 +43,13 @@ public class StoreContext : DbContext
             HasColumnName("Cost").
             IsRequired();
 
-            entity.HasOne(x => x.ProductGroup).
+            entity.HasOne(x => x.Group).
             WithMany(c=> c.Products).
             HasForeignKey(x=>x.Id).
             HasConstraintName("GroupToProduct");
         });
 
-        modelBuilder.Entity<ProductGroup>(entity =>
+        modelBuilder.Entity<Group>(entity =>
         {
             entity.ToTable("ProductGroups");
 
@@ -76,12 +76,11 @@ public class StoreContext : DbContext
             entity.Property(e => e.Count).
             HasColumnName("ProductCount");
 
-            entity.Property(e => e.ProductId).
-            HasColumnName("ProductId");
+            entity.HasMany(x => x.Products)
+                .WithMany(b => b.Storages)
+                .UsingEntity(j => j.ToTable("StorageProduct"));
 
-            entity.HasMany(x => x.Products).
-            WithMany(m => m.Storages).
-            UsingEntity(j=> j.ToTable("StorageProduct"));
+
         });
     }
 }
