@@ -1,7 +1,6 @@
-﻿namespace WebApplication1.Models
+﻿namespace WebApplication1.Models;
+
+public class ProductGroup: BaseModel
 {
-    public class ProductGroup: BaseModel
-    {
-        public List<Product> Products { get; set; } = new List<Product>();
-    }
+    public List<Product> Products { get; set; } = new List<Product>();
 }

@@ -1,9 +1,8 @@
-﻿namespace WebApplication1.Models
+﻿namespace WebApplication1.Models;
+
+public class BaseModel
 {
-    public class BaseModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-    }
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
 }
