@@ -1,12 +1,13 @@
-﻿using System.Data.SqlTypes;
-using WebApplication1.Models.Base;
+﻿using Store.Models.Base;
 
-namespace WebApplication1.Models;
-
-public class Product: BaseModel
+namespace Store.Models
 {
-    public int Price { get; set; }
-    public int GroupId { get; set; }
-    public virtual Group Group { get; set; } = null!;
-    public virtual List<Storage> Storages { get; set; } = null!;
+    public class Product : BaseModel
+    {
+        public string Description { get; set; } = null!;
+        public int GroupID { get; set; }
+        public virtual Group Group { get; set; } = null!;
+        public int Price { get; set; }
+        public virtual List<Store> Stores { get; set; } = null!;
+    }
 }

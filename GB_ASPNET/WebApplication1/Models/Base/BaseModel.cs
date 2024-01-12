@@ -1,8 +1,8 @@
-﻿namespace WebApplication1.Models.Base;
-
-public class BaseModel
+﻿namespace Store.Models.Base
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public abstract class BaseModel
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+    }
 }
