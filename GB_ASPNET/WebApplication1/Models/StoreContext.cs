@@ -4,11 +4,15 @@ namespace WebApplication1.Models;
 
 public class StoreContext : DbContext
 {
-    public DbSet<Storage> ProductStorage { get; set;}
-    public DbSet<Product> Products { get; set;}
-    public DbSet<Group> ProductGroups { get; set;}
+    public DbSet<Group> Groups { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Storage> Stores { get; set; }
+    public StoreContext()
+    {
 
-    public StoreContext(DbContextOptions<StoreContext> dbContext) : base(dbContext)
+    }
+
+    public StoreContext(DbContextOptions<StoreContext> dbc) : base(dbc)
     {
 
     }
@@ -16,7 +20,8 @@ public class StoreContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Server=.; Database=GB;Integrated Security=False;TrustServerCertificate=True; Trusted_Connection=True;").UseLazyLoadingProxies();
+        optionsBuilder.UseSqlServer(@"Server=Hirofumi; Database=WebStore;Integrated Security=False;TrustServerCertificate=True; Trusted_Connection=True;")
+            .UseLazyLoadingProxies();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,61 +31,60 @@ public class StoreContext : DbContext
         {
             entity.ToTable("Products");
 
-            entity.HasKey(x => x.Id).HasName("ProductId");
+            entity.HasKey(x => x.Id).HasName("ProductID");
             entity.HasIndex(x => x.Name).IsUnique();
 
-            entity.Property(e=>e.Name).
-            HasColumnName("ProdName").
-            HasMaxLength(255).
-            IsRequired();
+            entity.Property(e => e.Name)
+           .HasColumnName("ProductName")
+           .HasMaxLength(255)
+           .IsRequired();
 
-            entity.Property(e=> e.Description).
-            HasColumnName("Description").
-            HasMaxLength(255).
-            IsRequired();
+            entity.Property(e => e.Description)
+                  .HasColumnName("Description")
+                  .HasMaxLength(255)
+                  .IsRequired();
 
-            entity.Property(e => e.Price).
-            HasColumnName("Cost").
-            IsRequired();
+            entity.Property(e => e.Price)
+                  .HasColumnName("Price")
+                  .IsRequired();
 
-            entity.HasOne(x => x.Group).
-            WithMany(c=> c.Products).
-            HasForeignKey(x=>x.Id).
-            HasConstraintName("GroupToProduct");
+            entity.HasOne(x => x.Group)
+            .WithMany(c => c.Products)
+            .HasForeignKey(x => x.Id)
+            .HasConstraintName("GroupToProduct");
         });
 
         modelBuilder.Entity<Group>(entity =>
         {
             entity.ToTable("ProductGroups");
 
-            entity.HasKey(x => x.Id).HasName("GroupId");
+            entity.HasKey(x => x.Id).HasName("GroupID");
             entity.HasIndex(x => x.Name).IsUnique();
 
-            entity.Property(e => e.Name).
-            HasColumnName("ProdName").
-            HasMaxLength(255).
-            IsRequired();
-
+            entity.Property(e => e.Name)
+           .HasColumnName("ProductName")
+           .HasMaxLength(255);
         });
-
 
         modelBuilder.Entity<Storage>(entity =>
         {
+
             entity.ToTable("Storage");
 
-            entity.HasKey(x => x.Id).HasName("StoreId");            
+            entity.HasKey(x => x.Id).HasName("StoreID");
 
-            entity.Property(e => e.Name).
-            HasColumnName("StorageName");
 
-            entity.Property(e => e.Count).
-            HasColumnName("ProductCount");
+            entity.Property(e => e.Name)
+            .HasColumnName("StorageName");
+
+            entity.Property(e => e.Count)
+            .HasColumnName("ProductCount");
 
             entity.HasMany(x => x.Products)
-                .WithMany(b => b.Storages)
-                .UsingEntity(j => j.ToTable("StorageProduct"));
-
-
+            .WithMany(m => m.Storages)
+            .UsingEntity(j => j.ToTable("StorageProduct"));
         });
     }
 }
+
+
