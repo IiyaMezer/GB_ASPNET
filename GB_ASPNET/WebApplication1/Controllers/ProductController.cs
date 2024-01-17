@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Store.Models;
+using WebApplication1.Abstracts;
+using WebApplication1.Models;
+using WebApplication1.Models.DTO;
 
 namespace WebApplication1.Controllers
 {
@@ -7,63 +9,26 @@ namespace WebApplication1.Controllers
     [Route("[controller]")]
     public class ProductController : ControllerBase
     {
+        private readonly IProductRepository _repository;
+
+        public ProductController(IProductRepository repository)
+        {
+            _repository = repository;
+        }
+
         [HttpGet("getProducts")]
         public IActionResult GetProducts()
         {
-            try
-            {
-                using (var context = new StoreContext())
-                {
-                    var products = context.Products.Select(x => new Product()
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Description = x.Description
-                    });
-                    return Ok(products);
-
-                }
-            }
-            catch
-            {
-
-                return StatusCode(500);
-            }
+            var products = _repository.GetProducts();
             return Ok();
 
         }
-        [HttpPost("putProducts")]
-        public IActionResult PutProducts([FromQuery] string name, string description, int groupId, int price)
+        [HttpPost("addProducts")]
+        public IActionResult AddProducts([FromBody] ProductDTO productDto)
         {
-            try
-            {
-                using (var context = new StoreContext())
-                {
-                    if (!context.Products.Any(x => x.Name.ToLower().Equals(name)))
-                    {
-                        context.Add(new Product()
-                        {
-                            Name = name,
-                            Description = description,
-                            Price = price,
-                            GroupID = groupId
-                        });
-                        context.SaveChanges();
-                        return Ok();
-                    }
-                    else
-                    {
-                        StatusCode(409);
-                    }
 
-                }
-            }
-            catch
-            {
-
-                return StatusCode(500);
-            }
-            return Ok();
+            var result = _repository.AddProduct(productDto);
+            return Ok(result);
 
         }
         [HttpDelete("deleteProduct/{productId}")]

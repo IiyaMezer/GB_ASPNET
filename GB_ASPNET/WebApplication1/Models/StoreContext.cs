@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Store.Models
+namespace WebApplication1.Models
 {
     public class StoreContext : DbContext
     {
@@ -19,7 +19,15 @@ namespace Store.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.; Database=GB;Integrated Security=False;TrustServerCertificate=True; Trusted_Connection=True;").UseLazyLoadingProxies();
+
+            var config = new ConfigurationBuilder().
+                   SetBasePath(Directory.GetCurrentDirectory()).
+                   AddJsonFile("appsettings.json").
+                   Build();
+            
+            string connectionString = config.GetConnectionString("DefaultConnection");
+
+            optionsBuilder.UseSqlServer(connectionString);
                 
         }
 

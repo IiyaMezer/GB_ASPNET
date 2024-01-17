@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Store.Models;
+using WebApplication1.Abstracts;
+using WebApplication1.Models;
+using WebApplication1.Models.DTO;
 
 namespace WebApplication1.Controllers
 {
@@ -7,8 +9,30 @@ namespace WebApplication1.Controllers
     [Route("[controller]")]
     public class GroupController : ControllerBase
     {
+        private readonly IGroupRepository _repository;
 
-        [HttpDelete("deleteGroup/{groupId}")]
+        public GroupController(IGroupRepository repository)
+        {
+            _repository = repository;
+        }
+
+        [HttpGet("getGroups")]
+        public IActionResult GetGroups()
+        {
+            var groups = _repository.GetGroups();
+            return Ok(groups);
+
+        }
+        [HttpPost("addGroups")]
+        public IActionResult AddGroups([FromBody] GroupDTO groupsDto)
+        {
+
+            var result = _repository.AddGroup(groupsDto);
+            return Ok(result);
+
+        }
+
+        [HttpDelete("deleteGroup/{group.Id}")]
         public IActionResult DelGroup([FromQuery] int groupId)
         {
             try

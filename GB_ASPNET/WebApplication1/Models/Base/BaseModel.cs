@@ -1,4 +1,4 @@
-﻿namespace Store.Models.Base
+﻿namespace WebApplication1.Models.Base
 {
     public abstract class BaseModel
     {

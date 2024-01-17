@@ -1,6 +1,6 @@
-﻿using Store.Models.Base;
+﻿using WebApplication1.Models.Base;
 
-namespace Store.Models
+namespace WebApplication1.Models
 {
     public class Group : BaseModel 
     {
