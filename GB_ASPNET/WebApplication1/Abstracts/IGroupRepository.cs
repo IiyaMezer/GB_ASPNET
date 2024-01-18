@@ -8,5 +8,6 @@ namespace WebApplication1.Abstracts
 
         public IEnumerable<GroupDTO> GetGroups();
         public byte[] GetBytesForCsv();
+        public string GetCache();
     }
 }

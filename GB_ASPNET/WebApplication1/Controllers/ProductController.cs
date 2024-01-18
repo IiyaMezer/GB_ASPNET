@@ -96,5 +96,18 @@ namespace WebApplication1.Controllers
             byte[] filebytes = _repository.GetBytesForCsv();
             return File(filebytes, "text/csv", "products.csv");
         }
+
+        [HttpGet("cacheStats")]
+        public ActionResult<string> CacheStats()
+        {
+            string cache = _repository.GetCache();
+            if (cache != null)
+            {
+                string filename = $"products_{DateTime.Now.ToBinary().ToString()}.csv";
+                System.IO.File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles", filename), cache);
+                return $"https://{Request.Host.ToString()}/static/{filename}";
+            }
+            return StatusCode(500);
+        }
     }
 }

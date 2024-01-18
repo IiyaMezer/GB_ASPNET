@@ -10,6 +10,7 @@ namespace WebApplication1.Abstracts
 
         public IEnumerable<ProductDTO> GetProducts();
         public byte[] GetBytesForCsv();
+        public string GetCache();
 
     }
 }

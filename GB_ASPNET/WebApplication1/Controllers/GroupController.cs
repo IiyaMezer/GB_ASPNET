@@ -71,6 +71,18 @@ public class GroupController : ControllerBase
         return File(filebytes, "text/csv", "groups.csv");
     }
 
+    [HttpGet("cacheStats")]
+    public ActionResult<string> CacheStats()
+    {
+        string cache = _repository.GetCache();
+        if (cache != null)
+        {
+            string filename = $"groups_{DateTime.Now.ToBinary().ToString()}.csv";
+            System.IO.File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles", filename), cache);
+            return $"https://{Request.Host.ToString()}/static/{filename}";
+        }
+        return StatusCode(500);
+    }
 
 
 }

@@ -4,6 +4,7 @@ using WebApplication1.Models;
 using AutoMapper;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Text;
 
 namespace WebApplication1.Repo;
 
@@ -69,6 +70,20 @@ public class GroupRepository : IGroupRepository
                 }
             }
         }
+    }
+    public string GetCache()
+    {
+        var currentCatche = _cache.GetCurrentStatistics();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.AppendLine($"Entry count: {currentCatche.CurrentEntryCount}");
+        stringBuilder.AppendLine($"Size: {currentCatche.CurrentEstimatedSize}");
+        stringBuilder.AppendLine($"Misses: {currentCatche.TotalMisses}");
+        stringBuilder.AppendLine($"Hits: {currentCatche.TotalHits}");
+        stringBuilder.AppendLine($"_________________________________");
+        stringBuilder.AppendLine(currentCatche.ToString());
+
+        return stringBuilder.ToString();
     }
 
 }
