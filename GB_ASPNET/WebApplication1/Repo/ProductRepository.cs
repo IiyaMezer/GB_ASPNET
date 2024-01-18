@@ -48,5 +48,27 @@ namespace WebApplication1.Repo
                 return productsList;
             }
         }
+
+        public byte[] GetBytesForCsv()
+        {
+            using (StoreContext context = new())
+            {
+                List<Product> products = context.Products.ToList();
+                using (MemoryStream memoryStream = new())
+                {
+                    using (StreamWriter streamWriter = new(memoryStream))
+                    {
+                        streamWriter.WriteLine("Id, Name, Description");
+
+                        foreach (Product product in products)
+                        {
+                            streamWriter.WriteLine($"{product.Id}_{product.Name}_{product.Descriptionaaaaaaaaa}");
+                        }
+                        streamWriter.Flush();
+                        return memoryStream.ToArray();
+                    }
+                }
+            }
+        }
     }
 }

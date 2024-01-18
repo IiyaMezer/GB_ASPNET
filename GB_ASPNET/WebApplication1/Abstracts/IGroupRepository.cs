@@ -7,5 +7,6 @@ namespace WebApplication1.Abstracts
         public int AddGroup(GroupDTO group);
 
         public IEnumerable<GroupDTO> GetGroups();
+        public byte[] GetBytesForCsv();
     }
 }

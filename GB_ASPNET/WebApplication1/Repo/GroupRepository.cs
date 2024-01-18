@@ -5,48 +5,69 @@ using AutoMapper;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace WebApplication1.Repo
+namespace WebApplication1.Repo;
+
+public class GroupRepository : IGroupRepository
 {
-    public class GroupRepository : IGroupRepository
+    private readonly IMapper _mapper;
+    private readonly IMemoryCache _cache;
+
+    public GroupRepository(IMapper mapper, IMemoryCache cache)
     {
-        private readonly IMapper _mapper;
-        private readonly IMemoryCache _cache;
+        _mapper = mapper;
+        _cache = cache;
+    }
+    public int AddGroup(GroupDTO group)
+    {
 
-        public GroupRepository(IMapper mapper, IMemoryCache cache)
+        using (var context = new StoreContext())
         {
-            _mapper = mapper;
-            _cache = cache;
-        }
-        public int AddGroup(GroupDTO group)
-        {
-
-            using (var context = new StoreContext())
+            var entityGroup = context.Groups.FirstOrDefault(x => x.Name.ToLower() == group.Name.ToLower());
+            if (entityGroup == null)
             {
-                var entityGroup = context.Groups.FirstOrDefault(x => x.Name.ToLower() == group.Name.ToLower());
-                if (entityGroup == null)
-                {
-                    entityGroup = _mapper.Map<Models.Group>(group);
-                    context.Groups.Add(entityGroup);
-                    context.SaveChanges();
-                    _cache.Remove("groups");
-                }
-                return entityGroup.Id;
+                entityGroup = _mapper.Map<Models.Group>(group);
+                context.Groups.Add(entityGroup);
+                context.SaveChanges();
+                _cache.Remove("groups");
             }
-        }
-        public IEnumerable<GroupDTO> GetGroups()
-        {
-            if (_cache.TryGetValue("groups", out List<GroupDTO> groups))
-            {
-                return groups;
-            }
-            
-            using (StoreContext context = new())
-            {
-                var groupsList = context.Groups.Select(x => _mapper.Map<GroupDTO>(x)).ToList();
-                _cache.Set("groups", groupsList, TimeSpan.FromMinutes(30));
-                return groupsList;
-            }
-
+            return entityGroup.Id;
         }
     }
+    public IEnumerable<GroupDTO> GetGroups()
+    {
+        if (_cache.TryGetValue("groups", out List<GroupDTO> groups))
+        {
+            return groups;
+        }
+
+        using (StoreContext context = new())
+        {
+            var groupsList = context.Groups.Select(x => _mapper.Map<GroupDTO>(x)).ToList();
+            _cache.Set("groups", groupsList, TimeSpan.FromMinutes(30));
+            return groupsList;
+        }
+
+    }
+
+    public byte[] GetBytesForCsv()
+    {
+        using (StoreContext context = new())
+        {
+            List<Group> groups = context.Groups.ToList();
+            using (MemoryStream memoryStream = new())
+            {
+                using (StreamWriter streamWriter = new(memoryStream))
+                {
+                    streamWriter.WriteLine("Id, Name");
+
+                    foreach (Group group in groups)
+                    {
+                        streamWriter.WriteLine($"{group.Id}_{group.Name}");
+                    }
+                    streamWriter.Flush();
+                    return memoryStream.ToArray();
+                }
+            }
+        }
+    } 
 }
