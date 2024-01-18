@@ -62,7 +62,7 @@ namespace WebApplication1.Repo
 
                         foreach (Product product in products)
                         {
-                            streamWriter.WriteLine($"{product.Id}_{product.Name}_{product.Descriptionaaaaaaaaa}");
+                            streamWriter.WriteLine($"{product.Id}_{product.Name}_{product.Description}");
                         }
                         streamWriter.Flush();
                         return memoryStream.ToArray();

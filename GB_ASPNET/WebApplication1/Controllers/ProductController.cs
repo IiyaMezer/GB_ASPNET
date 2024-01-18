@@ -87,8 +87,14 @@ namespace WebApplication1.Controllers
                 return StatusCode(500);
             }
             return Ok();
+        }
 
+        [HttpGet("productsToCsv")]
+        public FileContentResult ExportToCsv()
+        {
 
+            byte[] filebytes = _repository.GetBytesForCsv();
+            return File(filebytes, "text/csv", "products.csv");
         }
     }
 }

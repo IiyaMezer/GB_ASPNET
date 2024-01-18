@@ -9,6 +9,7 @@ namespace WebApplication1.Abstracts
         public int AddProduct(ProductDTO product);
 
         public IEnumerable<ProductDTO> GetProducts();
+        public byte[] GetBytesForCsv();
 
     }
 }

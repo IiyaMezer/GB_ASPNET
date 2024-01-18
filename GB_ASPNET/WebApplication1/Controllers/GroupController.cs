@@ -68,7 +68,9 @@ public class GroupController : ControllerBase
     {
 
         byte[] filebytes = _repository.GetBytesForCsv();
-        return File(filebytes, "groups.csv");
+        return File(filebytes, "text/csv", "groups.csv");
     }
+
+
 
 }
