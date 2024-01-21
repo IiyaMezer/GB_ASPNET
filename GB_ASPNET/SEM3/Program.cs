@@ -3,6 +3,7 @@ using SEM3.Mapper;
 using SEM3.Models;
 using SEM3.Mutations;
 using SEM3.Query;
+using SEM3.Services;
 
 namespace SEM3
 {

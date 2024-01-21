@@ -4,7 +4,7 @@ using SEM3.Abstractions;
 using SEM3.Models;
 using SEM3.Models.DTO;
 
-namespace SEM3
+namespace SEM3.Services
 {
     public class StoreServices : IStorageServices
     {
@@ -31,6 +31,27 @@ namespace SEM3
 
                 return entity.Id;
             }
+        }
+
+        public IEnumerable<ProductDTO> GetProductsByStoreId(int storeId)
+        {
+
+            if (storeId != null)
+            {
+                if (_context.Stores.Find(storeId) != null)
+                {
+                    return _context.Products
+                   .Where(p => p.Stores.Any(s => s.Id == storeId))
+                   .Select(x => _mapper.Map<ProductDTO>(x))
+                   .ToList();
+                }
+                else
+                {
+                    return Enumerable.Empty<ProductDTO>();
+                }
+                
+            }
+            else { throw new ArgumentNullException(nameof(storeId), "storeId cannot be null."); }
         }
 
         public IEnumerable<StoreDTO> GetStores()

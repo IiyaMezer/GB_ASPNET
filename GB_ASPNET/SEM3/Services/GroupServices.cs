@@ -4,7 +4,7 @@ using SEM3.Abstractions;
 using SEM3.Models;
 using SEM3.Models.DTO;
 
-namespace SEM3
+namespace SEM3.Services
 {
     public class GroupServices : IGroupServices
     {

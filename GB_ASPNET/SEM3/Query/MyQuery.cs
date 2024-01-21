@@ -1,5 +1,6 @@
 ﻿using SEM3.Abstractions;
 using SEM3.Models.DTO;
+using System.Collections;
 
 namespace SEM3.Query
 {
@@ -9,5 +10,7 @@ namespace SEM3.Query
 
         public IEnumerable<StoreDTO> GetStores([Service] IStorageServices services) => services.GetStores();
         public IEnumerable<GroupDTO> GetGroups([Service] IGroupServices services) => services.GetGroups();
+
+        public IEnumerable<ProductDTO> GetProductsBySotoreId([Service] IStorageServices)
     }
 }
