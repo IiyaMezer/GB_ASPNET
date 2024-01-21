@@ -33,7 +33,7 @@ namespace SEM3.Services
             }
         }
 
-        public IEnumerable<ProductDTO> GetProductsByStoreId(int storeId)
+        public IEnumerable<ProductDTO> GetProductsByStoreId(int? storeId)
         {
 
             if (storeId != null)

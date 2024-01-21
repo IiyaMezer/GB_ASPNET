@@ -11,6 +11,11 @@ namespace SEM3.Query
         public IEnumerable<StoreDTO> GetStores([Service] IStorageServices services) => services.GetStores();
         public IEnumerable<GroupDTO> GetGroups([Service] IGroupServices services) => services.GetGroups();
 
-        public IEnumerable<ProductDTO> GetProductsBySotoreId([Service] IStorageServices)
+        public IEnumerable<ProductDTO> GetProductsBySotoreId([Service] IStorageServices services, int? storeId)
+        {
+            var products = services.GetProductsByStoreId(storeId);
+            return products;
+        }
+
     }
 }

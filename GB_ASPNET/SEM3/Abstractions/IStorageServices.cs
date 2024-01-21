@@ -6,6 +6,6 @@ namespace SEM3.Abstractions
     {
          IEnumerable<StoreDTO> GetStores();
          int AddStores(StoreDTO store);
-         IEnumerable<ProductDTO> GetProductsByStoreId(int storeId);
+         IEnumerable<ProductDTO> GetProductsByStoreId(int? storeId);
     }
 }
