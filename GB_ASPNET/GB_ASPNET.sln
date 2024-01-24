@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebAppli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEM3", "SEM3\SEM3.csproj", "{DAE0164D-795F-44A5-8DF8-AC27B19A0665}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sem4_GQL", "Sem4_GQL\Sem4_GQL.csproj", "{9AA47A53-3066-4A2F-9503-8948EE814BED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SEM4_Swagger", "SEM4_Swagger\SEM4_Swagger.csproj", "{E38E155A-FDFD-46D3-99C3-2B92511F54BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{DAE0164D-795F-44A5-8DF8-AC27B19A0665}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAE0164D-795F-44A5-8DF8-AC27B19A0665}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAE0164D-795F-44A5-8DF8-AC27B19A0665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AA47A53-3066-4A2F-9503-8948EE814BED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AA47A53-3066-4A2F-9503-8948EE814BED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AA47A53-3066-4A2F-9503-8948EE814BED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AA47A53-3066-4A2F-9503-8948EE814BED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E38E155A-FDFD-46D3-99C3-2B92511F54BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E38E155A-FDFD-46D3-99C3-2B92511F54BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E38E155A-FDFD-46D3-99C3-2B92511F54BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E38E155A-FDFD-46D3-99C3-2B92511F54BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
