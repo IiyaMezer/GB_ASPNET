@@ -16,7 +16,34 @@ namespace SEM4_Swagger
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(opt =>
+{
+opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+{
+In = ParameterLocation.Header,
+Description = "Please enter token",
+Name = "Authorization",
+Type = SecuritySchemeType.Http,
+BearerFormat = "Token",
+
+Scheme = "bearer"
+});
+opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+{
+{
+new OpenApiSecurityScheme
+{
+Reference = new OpenApiReference
+{
+Type=ReferenceType.SecurityScheme,
+Id="Bearer"
+}
+},
+new string[]{}
+}
+});
+}
+);
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(b =>
             {
                 b.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
